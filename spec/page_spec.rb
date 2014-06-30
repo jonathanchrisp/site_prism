@@ -49,6 +49,17 @@ describe SitePrism::Page do
     expect(page_with_url.url).to eq('/users')
   end
 
+  it "should allow expansions which return encoded characters and decode them" do
+    class MyPageWithUriTemplate < SitePrism::Page
+      set_url "/users{/path}{?query*}"
+    end
+    page_with_url = MyPageWithUriTemplate.new
+    expect { page_with_url.load(path: 'foo/bar/12345') }.to_not raise_error
+    expect(page_with_url.url(path: 'foo/bar/12345', query: {'recent_posts' => 'true'})).to eq('/users/foo/bar/12345?recent_posts=true')
+    expect(page_with_url.url(path: 'foo/bar/12345')).to eq('/users/foo/bar/12345')
+    expect(page_with_url.url).to eq('/users')
+  end
+
   it "should allow to load html" do
     class Page < SitePrism::Page; end
     page = Page.new

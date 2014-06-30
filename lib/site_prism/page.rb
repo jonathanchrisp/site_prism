@@ -47,7 +47,7 @@ module SitePrism
 
     def url(expansion = {})
       return nil if self.class.url.nil?
-      Addressable::Template.new(self.class.url).expand(expansion).to_s
+      Addressable::URI.unencode(Addressable::Template.new(self.class.url).expand(expansion))
     end
 
     def url_matcher
