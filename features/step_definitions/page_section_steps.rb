@@ -29,8 +29,7 @@ Then /^I can see a collection of sections$/ do
     search_result.link.text.should == "link #{i}"
     search_result.description.text.should == "description #{i}"
   end
-  @test_site.section_experiments.search_results.size.should == 4
-  @test_site.section_experiments.should have(4).search_results(:count => 4)
+  @test_site.section_experiments.should have_search_results count: 4
 end
 
 Then /^I can see an anonymous section$/ do
@@ -45,8 +44,7 @@ Then /^I can see a collection of anonymous sections$/ do
     section.title.text.should == "Section #{i}"
     section.downcase_title_text.should == "section #{i}"
   end
-  @test_site.section_experiments.anonymous_sections.size.should == 2
-  @test_site.section_experiments.should have(2).anonymous_sections(:count => 2)
+  @test_site.section_experiments.should have_anonymous_sections count: 2
 end
 
 Then /^the section is visible$/ do
@@ -68,9 +66,7 @@ Then /^I can run javascript against the search results$/ do
 end
 
 Then /^I can see individual people in the people list$/ do
-  @test_site.home.people.should have(4).individuals
-  @test_site.home.people.should have(4).individuals :count => 4
-  @test_site.home.people.should have_individuals :count => 4
+  @test_site.home.people.should have_individuals count: 4
 end
 
 Then /^I can get access to a page through a section$/ do
